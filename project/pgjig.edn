@@ -1,0 +1,5 @@
+{:targets
+ {:pgqs {:instance "pgqs"
+         :dbname "main"
+         :new true
+         :search-path ["pgqs_test"]}}}
