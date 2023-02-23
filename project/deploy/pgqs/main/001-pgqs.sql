@@ -976,7 +976,6 @@ BEGIN
          array_to_json(array_agg(jsonb_build_object('op', op, 'request', request)))
     FROM pgqs.maintenance_operations(CURRENT_TIMESTAMP) AS _ (op, request);
   response := jsonb_build_object('Operations', _operations);
-  RAISE NOTICE '%', jsonb_pretty(response);
 END
 $body$;
 
@@ -1012,7 +1011,6 @@ LANGUAGE PLPGSQL AS $body$
 DECLARE
   _queue_name TEXT := pgqs.maint_request_queue_name(in_request);
 BEGIN
-  RAISE NOTICE '% queue_name %', in_request, _queue_name;
   PERFORM pgqs.delete_queue(_queue_name);
   RETURN;
 END
@@ -2251,7 +2249,6 @@ DECLARE
   k_deleted CONSTANT pgqs.queue_state := 'DELETED';
   _queue RECORD;
 BEGIN
-  RAISE NOTICE 'delete_queue %s',in_queue_name;
   SELECT INTO _queue
          *
     FROM pgqs.queues q
